@@ -28,7 +28,7 @@ class Solution {
   public:
     int numUniqueEmails(vector<string>& emails) {
       std::set<string> s;
-      for(auto email : emails) {
+      for(auto& email : emails) {
         auto at_pos = email.find('@');
         auto local = email.substr(0, at_pos);
         auto plus_pos = local.find('+');

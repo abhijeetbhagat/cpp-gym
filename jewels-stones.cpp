@@ -16,7 +16,7 @@ class Solution {
 public:
     int numJewelsInStones(string J, string S) {
         int c = 0;
-        for(auto i : S) {
+        for(auto& i : S) {
             if (J.find(i) != -1) { //O(n) complexity
                 c++;
             }

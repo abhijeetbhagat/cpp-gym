@@ -22,25 +22,24 @@ Output: [3,2,0,1]
 #include<iostream>
 using namespace std;
 
-int main(){ 
-  std::string s= "DDI";
-  std::vector<int> a(s.size() + 1);
-  std::iota(a.begin(), a.end(), 0);
-  do{
-    bool found = true;
-    for(int i = 0; i < s.size(); ++i){ 
-      if(s[i] == 'I' && a[i] > a[i+1]) {
-        found = false;
-        break;
-      }
-      if(s[i] == 'D' && a[i] < a[i+1]) {
-        found = false;
-        break;
-      }
+class Solution {
+  public:
+    vector<int> diStringMatch(string s) {
+      int N = s.size();
+      std::vector<int> a(N + 1);
+      std::iota(a.begin(), a.end(), 0);
+      int min = 0, max = N;
+      for(int i = 0; i < N; ++i){ 
+        if(s[i] == 'D' && a[i] < a[i+1]) {
+          int x = a[N];
+          int k = N;
+          while(k > i){
+            a[k] = a[k-1]; 
+            k--;
+          }
+          a[i] = x;
+        }
+      }  
+      return a;
     }
-    if(found)
-      break;
-
-  }while(std::next_permutation(a.begin(), a.end()));
-  assert(std::equal(a.begin(), a.end(), begin({3,2,0,1})));
-}
+};

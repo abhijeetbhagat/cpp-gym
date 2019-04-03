@@ -26,6 +26,7 @@ class UdpListenerSocket {
 
         int bind_to(std::string const& ip);
         void recv_from();
+        void send_to(std::string const& ip, int const& port, std::string const& msg);
 };
 
 UdpListenerSocket::UdpListenerSocket(){
@@ -59,4 +60,14 @@ void UdpListenerSocket::recv_from(){
         buf[recvlen] = 0;
         printf("received message: \"%s\"\n", buf);
     }
+}
+
+void UdpListenerSocket::send_to(std::string const& ip, int const& port, std::string const& msg){ 
+  sockaddr_in remaddr;
+  memset((char*)&remaddr, 0, sizeof remaddr);
+  remaddr.sin_family = AF_INET;
+  inet_pton(AF_INET, ip.c_str(), &remaddr.sin_addr);
+  remaddr.sin_port = htons(port);
+
+  sendto(fd, msg.c_str(), msg.size(), MSG_CONFIRM, (sockaddr *)&remaddr, sizeof remaddr);
 }
